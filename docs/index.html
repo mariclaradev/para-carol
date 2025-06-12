@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para a Carol 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #ffc0cb, #ffe4e1);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Great Vibes', cursive;
+      position: relative;
+    }
+
+    .message {
+      color: #fff;
+      font-size: 2.5rem;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      line-height: 1.25;
+      animation: fadeIn 4s ease-in-out forwards;
+      opacity: 0;
+      user-select: none;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 6s infinite ease-in;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -50px;
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        bottom: 100vh;
+        opacity: 0;
+        transform: translateX(30px);
+      }
+    }
+
+    /* ===== Botão minimalista estilo Spotify ===== */
+    #playBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+      outline: none;
+      user-select: none;
+    }
+
+    #playBtn:hover {
+      background-color: rgba(255, 255, 255, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Ícone play */
+    #playIcon {
+      width: 0;
+      height: 0;
+      border-left: 16px solid #ff1493;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Ícone pause (duas barras verticais) */
+    #pauseIcon {
+      display: none;
+      width: 16px;
+      height: 20px;
+      position: relative;
+    }
+
+    #pauseIcon div {
+      background-color: #ff1493;
+      width: 5px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      border-radius: 2px;
+    }
+
+    #pauseIcon div:first-child {
+      left: 0;
+    }
+
+    #pauseIcon div:last-child {
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="message">
+    Feliz Dia das Namoradas, Carol 💖<br /><br />
+    Desde que te conheci, tudo ficou mais leve, mais bonito...<br />
+    Você tem um jeitinho único que me faz sorrir só de lembrar.<br />
+    Obrigada por existir e por ser tão incrível!<br /><br />
+    Mal posso esperar por todos os momentos que ainda vamos viver juntas!<br />
+    Você é muito especial pra mim.<br />
+    Com carinho,<br />
+    Clara 💕
+  </div>
+
+  <audio id="audio" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <button id="playBtn" aria-label="Tocar música" title="Tocar música">
+    <div id="playIcon"></div>
+    <div id="pauseIcon">
+      <div></div>
+      <div></div>
+    </div>
+  </button>
+
+  <script>
+    const playBtn = document.getElementById('playBtn');
+    const audio = document.getElementById('audio');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        playBtn.setAttribute('title', 'Pausar música');
+        playBtn.setAttribute('aria-label', 'Pausar música');
+      } else {
+        audio.pause();
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        playBtn.setAttribute('title', 'Tocar música');
+        playBtn.setAttribute('aria-label', 'Tocar música');
+      }
+    });
+
+    // Opcional: quando a música terminar (não loop aqui, mas caso não tivesse)
+    audio.addEventListener('ended', () => {
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+      playBtn.setAttribute('title', 'Tocar música');
+      playBtn.setAttribute('aria-label', 'Tocar música');
+    });
+  </script>
+
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
+</body>
+</html>
